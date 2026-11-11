@@ -1,7 +1,7 @@
 import sys,json
 from playwright.sync_api import sync_playwright
 OUT='/tmp/claude-0/-home-claude/e03973ac-94f3-567b-8ab4-293a02255c54/scratchpad/shots/'
-URL='file:///home/claude/build/site/dist/index.html'
+URL='file://'+__import__('os').path.dirname(__import__('os').path.abspath(__file__))+'/docs/index.html'
 errs=[]
 with sync_playwright() as pw:
     b=pw.chromium.launch()

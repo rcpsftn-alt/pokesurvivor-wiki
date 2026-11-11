@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assemble dist/index.html : une seule page autonome (CSS, JS, données, sprites et polices intégrés)."""
+"""Assemble docs/index.html : une seule page autonome (CSS, JS, données, sprites et polices intégrés)."""
 import base64, json, pathlib, sys
 R = pathlib.Path(__file__).parent
 rd = lambda p: (R / p).read_text(encoding='utf8')
@@ -17,6 +17,6 @@ html = rd('src/template.html')
 for mark, val in (('/*CSS*/', css), ('<!--ARCEUS-->', rd('src/arceus.html')), ('/*DATA*/', data), ('/*JS*/', js)):
     assert html.count(mark) == 1, mark
     html = html.replace(mark, val)
-out = R / 'dist'; out.mkdir(exist_ok=True)
+out = R / 'docs'; out.mkdir(exist_ok=True)
 (out / 'index.html').write_text(html, encoding='utf8')
-print(f'dist/index.html : {len(html.encode())/1024:.0f} Ko')
+print(f'docs/index.html : {len(html.encode())/1024:.0f} Ko')

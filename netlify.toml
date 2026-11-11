@@ -1,7 +1,7 @@
 # PokéSurvivor Wiki : site statique, aucune étape de build côté Netlify.
-# Pour régénérer dist/index.html en local : python3 build.py
+# Pour régénérer docs/index.html en local : python3 build.py
 [build]
-  publish = "dist"
+  publish = "docs"
 
 [[headers]]
   for = "/*"
