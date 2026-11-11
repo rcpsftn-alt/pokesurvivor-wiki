@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PokéSurvivor Wiki</title>
+<meta name="description" content="Wiki non officiel de PokéSurvivor : stats des 966 Pokémon, talents, natures, attaques, types, objets, ennemis, succès et le Jugement d'Arceus.">
+<meta name="theme-color" content="#0e1430">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' shape-rendering='crispEdges'%3E%3Crect width='16' height='16' rx='3' fill='%23141b34'/%3E%3Cpath fill='%23ffce1f' d='M9 2h3L8 7h3l-6 7 2-5H4z'/%3E%3C/svg%3E">
+<style>/*CSS*/</style>
+</head>
+<body>
+<a class="skip" href="#main">Aller au contenu</a>
+<header class="top">
+  <a class="brand" href="#/pokedex" aria-label="PokéSurvivor Wiki, accueil"><span class="bolt" aria-hidden="true"></span><span class="bname">PokéSurvivor <b>Wiki</b></span></a>
+  <div class="gs" role="search">
+    <input id="gq" type="search" autocomplete="off" placeholder="Chercher un Pokémon, une attaque, un talent…" aria-label="Recherche dans tout le wiki" aria-controls="gres">
+    <kbd>/</kbd>
+    <div id="gres" class="gres" hidden></div>
+  </div>
+  <div class="tools">
+    <select id="lg" aria-label="Langue des noms"><option value="fr">Noms FR</option><option value="en">Noms EN</option></select>
+    <button id="thm" class="ib" type="button" aria-label="Changer de thème"></button>
+    <button id="shr" class="ib" type="button">Partager</button>
+  </div>
+</header>
+<nav class="nav" id="nav" aria-label="Sections du wiki"></nav>
+<main id="main" tabindex="-1">
+  <section id="s-pokedex" hidden>
+    <div class="ph"><h1>Pokédex</h1><p>Les stats de jeu des <b id="tot"></b> Pokémon jouables. Trie par colonne, filtre, puis ouvre une fiche.</p></div>
+    <div class="rec" id="rec"></div>
+    <div class="bar">
+      <input id="q" type="search" placeholder="Nom ou numéro" aria-label="Filtrer les Pokémon">
+      <select id="gen" aria-label="Génération"></select>
+      <select id="ty" aria-label="Type"></select>
+      <select id="fl" aria-label="Catégorie"><option value="">Tous</option><option value="st">Starters</option><option value="leg">Légendaires</option><option value="nl">Non légendaires</option><option value="fav">Mes favoris</option></select>
+      <div class="seg" role="group" aria-label="Affichage"><button type="button" data-view="table">Tableau</button><button type="button" data-view="cards">Cartes</button></div>
+    </div>
+    <details class="rg"><summary>Filtres de stats (min / max)</summary><div class="rgg" id="rgg"></div></details>
+    <div class="cntbar"><p class="cnt" id="cnt"></p><span><button type="button" class="lb" id="rs">Réinitialiser</button><button type="button" class="lb" id="csv">Exporter en CSV</button></span></div>
+    <div id="plist"></div>
+  </section>
+
+  <section id="s-talents" hidden>
+    <div class="ph"><h1>Talents et natures</h1><p>Chaque Pokémon de ta collection reçoit une nature au hasard, fixe pour ton compte, et l’un de ses talents. Le talent caché sort 1 fois sur 20.</p></div>
+    <p class="note">Un Aromate change la nature, une Pilule Talent change le talent et un Patch Talent donne accès au talent caché (Boutique Kecleon).</p>
+    <h2 class="sec">Natures</h2>
+    <div class="tw short"><table class="tt"><thead><tr><th>Nature</th><th>+10 %</th><th>−10 %</th></tr></thead><tbody id="nb"></tbody></table></div>
+    <h2 class="sec">Talents par Pokémon</h2>
+    <div class="bar"><input id="q2" type="search" placeholder="Pokémon ou talent" aria-label="Filtrer les talents"><select id="hf" aria-label="Talent caché"><option value="">Tous</option><option value="h">Avec talent caché</option><option value="n">Sans talent caché</option></select></div>
+    <p class="cnt" id="cnt2"></p>
+    <div class="tw"><table><thead><tr id="hd2"></tr></thead><tbody id="tb2"></tbody></table></div>
+  </section>
+
+  <section id="s-attaques" hidden>
+    <div class="ph"><h1>Attaques</h1><p>Un Pokémon utilise les attaques de ses types et de type Normal. Les CT de la Boutique Kecleon lui en apprennent d’autres.</p></div>
+    <div class="bar"><input id="mq" type="search" placeholder="Nom d’attaque" aria-label="Filtrer les attaques"><select id="mty" aria-label="Type"></select><select id="mkd" aria-label="Genre"></select><select id="mct" aria-label="CT"><option value="">Toutes</option><option value="1">Avec CT seulement</option></select></div>
+    <p class="cnt" id="mcnt"></p>
+    <div class="tw"><table><thead><tr id="mhd"></tr></thead><tbody id="mtb"></tbody></table></div>
+  </section>
+
+  <section id="s-types" hidden>
+    <div class="ph"><h1>Types</h1><p>La table officielle, adoucie par le jeu : ×2 devient ×1,6, ×0,5 devient ×0,6 et l’immunité devient ×0,3.</p></div>
+    <p class="note">Avec deux types, les multiplicateurs se multiplient (de ×0,3 à ×2,4). La table sert dans les deux sens : tes attaques contre les ennemis, et leurs attaques contre toi.</p>
+    <h2 class="sec">Table des types</h2><p class="cnt">Attaque en ligne, défense en colonne.</p><div class="tw" id="tmx"></div>
+    <h2 class="sec">Mon équipe (favoris)</h2><div id="tcv"></div>
+  </section>
+
+  <section id="s-objets" hidden>
+    <div class="ph"><h1>Objets et boutique</h1><p>Les objets se trouvent pendant la partie. Les améliorations et la boutique se paient en Poképièces.</p></div>
+    <div id="tit"></div>
+  </section>
+
+  <section id="s-ennemis" hidden>
+    <div class="ph"><h1>Ennemis</h1><p>Six tranches de Pokémon sauvages, des boss, et treize comportements.</p></div>
+    <div id="ten"></div>
+    <h2 class="sec">Simulateur de montée en puissance</h2>
+    <div class="simb"><label for="em">Moment de la partie : <b id="emv"></b></label><input type="range" id="em" min="0" max="30" step="1" value="10"></div>
+    <div class="tw"><table class="tt"><tbody id="esc"></tbody></table></div>
+  </section>
+
+  <section id="s-succes" hidden>
+    <div class="ph"><h1>Succès et missions</h1><p>Les succès, un succès par légendaire, et les missions quotidiennes et hebdomadaires.</p></div>
+    <div class="bar"><input id="aq" type="search" placeholder="Nom de succès" aria-label="Filtrer les succès"><select id="acat" aria-label="Catégorie"></select></div>
+    <div id="tac"></div>
+  </section>
+
+  <section id="s-arceus" hidden>
+    <div class="ph"><h1>Le Jugement d’Arceus</h1><p>Ce qui se passe à la minute 30, phase par phase, avec les chiffres du code du jeu.</p></div>
+    <!--ARCEUS-->
+  </section>
+
+  <section id="s-nouveautes" hidden>
+    <div class="ph"><h1>Nouveautés</h1><p>Toutes les mises à jour du jeu depuis la première version publique, traduites en français.</p></div>
+    <div class="bar"><span id="nvk" class="pills"></span><input id="nq" type="search" placeholder="Mot à chercher" aria-label="Chercher dans les nouveautés"></div>
+    <div id="nvh"></div><div id="nvl"></div>
+  </section>
+
+  <footer class="foot">
+    <p>Wiki de fans, non officiel et sans lien avec le jeu, Nintendo, Game Freak ou The Pokémon Company. Données et sprites issus du dépôt open source du jeu <b>JPTER78/pokesurvivor</b> (code sous licence PolyForm Noncommercial, sprites CC BY-NC 4.0). Données à jour au <b id="asof"></b>.</p>
+  </footer>
+</main>
+<div id="tray" class="tray" hidden></div>
+<dialog id="dlg" aria-label="Fiche"><div id="cd" class="sheet"></div></dialog>
+<div id="toast" class="toast" role="status" hidden></div>
+<script id="data" type="application/json">/*DATA*/</script>
+<script>/*JS*/</script>
+</body>
+</html>
